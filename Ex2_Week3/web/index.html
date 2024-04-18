@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ChatGPT API</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body class="bg-dark">
+    <div id="request" class="bg-body-secondary d-flex flex-column align-items-center m-2 p-2 border border-4 rounded-pill border-success-subtle">
+        <h1 class="text-success">ChatGPT API</h1>
+        <h3>Hello! I'm here to help you!</h3>
+        <form action="/" method="POST" class="d-flex flex-column align-items-center w-100">
+            <input type='hidden' name='type' value='request'>
+            <input class="w-50 rounded my-2" type="text" name="request_text" placeholder="Enter your request">
+            <input class="mt-3 btn btn-success" type="submit" value="Ask me!">
+        </form>
+        <form action="/" method="POST" class="d-flex flex-column align-items-center w-100 mt-3">
+          <input type='hidden' name='type' value='filter'>
+          <h6>Add filter words (optional, write only with spaces):</h6>
+          <div class="d-flex justify-content-between align-items-center">
+            <input class="w-50 rounded" type="text" name="filter" placeholder="Enter filter words">
+            <input class="btn btn-dark" type="submit" value="Add words">
+          </div>
+        </form>
+        <div class="d-flex align-items-center">
+          <h6 class="me-4 mt-3"><span class="text-success">Current Filters:</span> {{if .Filter}}{{.Filter}}{{else}}No items.{{end}}</h6>
+          <form action="/" method="POST">
+            <input type='hidden' name='type' value='clear'>
+            <input class="btn btn-dark" type="submit" value="Clear All">
+          </form>
+        </div>
+        <form action="/" method="POST">
+            <input type='hidden' name='type' value='history_log'>
+            <input class="mt-3 btn btn-dark" type="submit" value="History">
+        </form>
+    </div>
+    <div id="response" class="bg-body-secondary d-flex flex-column justify-content-center align-items-center m-5 p-4 border border-4 rounded border-success-subtle text-center">
+        {{if .Response}}
+        <p class="text-center">{{.Response}}</p>
+        {{else if .History}}
+        {{range .History}}
+            <div>
+                <p class="text-dark">Request: {{.Request}}</p>
+                <p class="text-success">Response: {{.Response}}</p>
+            </div>
+        {{end}}
+        {{else}}
+        <p class="text-center text-muted">No recent activity.</p>
+        {{end}}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
