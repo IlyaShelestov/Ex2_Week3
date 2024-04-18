@@ -101,7 +101,7 @@ func updateHistory(request, response string) {
 
 func callAPI(input string) string {
 	client := resty.New()
-	apiKey := "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"
+	apiKey := "INSERT_YOUR_API_KEY"
 	apiEndpoint := "https://api.openai.com/v1/chat/completions"
 
 	response, err := client.R().
